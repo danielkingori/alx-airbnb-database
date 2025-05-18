@@ -27,6 +27,7 @@ SELECT
     p.PropertyName,
     COUNT(b.BookingID) AS TotalBookings,
     RANK() OVER (ORDER BY COUNT(b.BookingID) DESC) AS BookingRank
+    ROW_NUMBER() OVER (ORDER BY COUNT(b.BookingID) DESC) AS RowNumber
 FROM
     Properties p
 LEFT JOIN
