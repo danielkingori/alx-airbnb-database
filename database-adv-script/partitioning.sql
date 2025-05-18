@@ -3,3 +3,96 @@ SELECT *
 FROM Bookings
 WHERE
     BookingDate BETWEEN '2025-02-01' AND '2025-05-31';
+
+DROP TABLE IF EXISTS Bookings;
+#Create the partitioned table
+CREATE TABLE Bookings (
+    BookingID INT,
+    BookingDate DATE,
+    UserID INT,
+    PropertyID INT,
+    -- Include other columns as necessary
+    PRIMARY KEY (BookingID, BookingDate) -- Include partitioning key in PK
+)
+PARTITION BY
+    RANGE (BookingDate);
+-- Create partitions for each month
+CREATE TABLE Bookings_2025_01 PARTITION OF Bookings FOR
+VALUES
+FROM ('2025-01-01') TO ('2025-02-01');
+
+CREATE TABLE Bookings_2025_02 PARTITION OF Bookings FOR
+VALUES
+FROM ('2025-02-01') TO ('2025-03-01');
+
+CREATE TABLE Bookings_2025_03 PARTITION OF Bookings FOR
+VALUES
+FROM ('2025-03-01') TO ('2025-04-01');
+-- Create partitions for subsequent months as needed
+CREATE TABLE Bookings_2025_04 PARTITION OF Bookings FOR
+VALUES
+FROM ('2025-04-01') TO ('2025-05-01');
+
+CREATE TABLE Bookings_2025_05 PARTITION OF Bookings FOR
+VALUES
+FROM ('2025-05-01') TO ('2025-06-01');
+
+CREATE TABLE Bookings_2025_06 PARTITION OF Bookings FOR
+VALUES
+FROM ('2025-06-01') TO ('2025-07-01');
+
+CREATE TABLE Bookings_2025_07 PARTITION OF Bookings FOR
+VALUES
+FROM ('2025-07-01') TO ('2025-08-01');
+
+CREATE TABLE Bookings_2025_08 PARTITION OF Bookings FOR
+VALUES
+FROM ('2025-08-01') TO ('2025-09-01');
+
+CREATE TABLE Bookings_2025_09 PARTITION OF Bookings FOR
+VALUES
+FROM ('2025-09-01') TO ('2025-10-01');
+
+CREATE TABLE Bookings_2025_10 PARTITION OF Bookings FOR
+VALUES
+FROM ('2025-10-01') TO ('2025-11-01');
+
+CREATE TABLE Bookings_2025_11 PARTITION OF Bookings FOR
+VALUES
+FROM ('2025-11-01') TO ('2025-12-01');
+
+CREATE TABLE Bookings_2025_12 PARTITION OF Bookings FOR
+VALUES
+FROM ('2025-12-01') TO ('2026-01-01');
+-- Insert data into the partitioned table
+--  (Data will be routed to the appropriate partition automatically)
+INSERT INTO
+    Bookings (
+        BookingID,
+        BookingDate,
+        UserID,
+        PropertyID
+    )
+SELECT 1, '2025-01-15', 101, 201
+UNION ALL
+SELECT 2, '2025-02-20', 102, 205
+UNION ALL
+SELECT 3, '2025-03-10', 101, 210
+UNION ALL
+SELECT 4, '2025-04-05', 103, 201
+UNION ALL
+SELECT 5, '2025-05-12', 102, 205
+UNION ALL
+SELECT 6, '2025-06-02', 101, 210
+UNION ALL
+SELECT 7, '2025-07-22', 104, 201
+UNION ALL
+SELECT 8, '2025-08-08', 103, 205
+UNION ALL
+SELECT 9, '2025-09-18', 102, 210
+UNION ALL
+SELECT 10, '2025-10-28', 101, 201
+UNION ALL
+SELECT 11, '2025-11-03', 104, 205
+UNION ALL
+SELECT 12, '2025-12-25', 103, 210;
