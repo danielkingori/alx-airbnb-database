@@ -10,17 +10,3 @@ Properties Table:
 - PropertyID: Primary key, used in JOIN clauses with the Bookings and Reviews tables.
 
 
-EXPLAIN ANALYZE
-SELECT
-    u.UserID,
-    u.Username,
-    COUNT(b.BookingID) AS TotalBookings
-FROM
-    Users u
-JOIN
-    Bookings b ON u.UserID = b.UserID
-GROUP BY
-    u.UserID,
-    u.Username
-ORDER BY
-    TotalBookings DESC;
