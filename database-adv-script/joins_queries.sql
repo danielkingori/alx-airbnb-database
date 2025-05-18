@@ -14,7 +14,9 @@ SELECT
 
 FROM
     Properties p
-LEFT JOIN r ON p.PropertyID = r.PropertyID;
+LEFT JOIN Reviews r ON p.PropertyID = r.PropertyID;
+
+ORDER BY p.PropertyName, r.Rating DESC
 
 ## FUll OUTER JOIN - retrieve all users and all bookings, even if the user has no booking or a booking is not linked to a user.
 SELECT
