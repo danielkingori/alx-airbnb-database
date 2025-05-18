@@ -10,7 +10,7 @@ Properties Table:
 - PropertyID: Primary key, used in JOIN clauses with the Bookings and Reviews tables.
 
 
-EXPLAIN
+EXPLAIN ANALYZE
 SELECT
     u.UserID,
     u.Username,
